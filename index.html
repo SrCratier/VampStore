@@ -11,32 +11,41 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
+
     <header>
         <div class="header-container">
-            <div class="logo" onclick="window.location.href='#'">VampStore</div>
-            <div class="search-bar">
-                <input type="text" id="search-input" placeholder="Buscar servicios, suscripciones...">
-                <i class='bx bx-x clear-search' id="clear-search-icon"></i>
-                <button id="search-button"><i class='bx bx-search'></i></button>
-                <div id="suggestions-container" class="suggestions-container"></div>
+            <div class="logo-container">
+                <div class="logo" onclick="window.location.href='#'">VampStore</div>
+                <a href="https://www.instagram.com/nvxonspotify/" target="_blank" class="references-btn">
+                    <i class='bx bxs-badge-check'></i> Nuestras referencias
+                </a>
             </div>
-            <div class="currency-selector">
-                <button id="currency-btn" class="currency-btn">
-                    <span id="current-currency">USD</span> <i class='bx bx-chevron-down'></i>
-                </button>
-                <ul id="currency-dropdown" class="currency-dropdown">
-                    <li data-currency="USD" data-rate="1">USD</li>
-                    <li data-currency="MXN" data-rate="18.76">MXN</li>
-                    <li data-currency="PEN" data-rate="3.56">PEN</li>
-                    <li data-currency="ARS" data-rate="1225">ARS</li>
-                    <li data-currency="COP" data-rate="4000">COP</li>
-                    <li data-currency="VES" data-rate="109.55">VES</li>
-                    <li data-currency="EUR" data-rate="0.85">EUR</li>
-                    <li data-currency="CLP" data-rate="933">CLP</li>
-                </ul>
+            <div class="header-right-controls">
+                <div class="search-bar">
+                    <input type="text" id="search-input" placeholder="Buscar servicios...">
+                    <i class='bx bx-x clear-search' id="clear-search-icon"></i>
+                    <button id="search-button"><i class='bx bx-search'></i></button>
+                    <div id="suggestions-container" class="suggestions-container"></div>
+                </div>
+                <div class="currency-selector">
+                    <button id="currency-btn" class="currency-btn">
+                        <span id="current-currency">USD</span> <i class='bx bx-chevron-down'></i>
+                    </button>
+                    <ul id="currency-dropdown" class="currency-dropdown">
+                        <li data-currency="USD" data-rate="1">USD</li>
+                        <li data-currency="MXN" data-rate="18.76">MXN</li>
+                        <li data-currency="PEN" data-rate="3.56">PEN</li>
+                        <li data-currency="ARS" data-rate="1225">ARS</li>
+                        <li data-currency="COP" data-rate="4000">COP</li>
+                        <li data-currency="VES" data-rate="109.55">VES</li>
+                        <li data-currency="EUR" data-rate="0.85">EUR</li>
+                        <li data-currency="CLP" data-rate="933">CLP</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </header>
+
     <nav class="main-nav">
         <ul>
             <li><a href="#spotify">Spotify</a></li>
@@ -47,7 +56,15 @@
             <li><a href="#crunchyroll">Crunchyroll</a></li>
         </ul>
     </nav>
+
     <main id="main-content">
+        <section id="hero" class="hero">
+            <div class="hero-content">
+                <h1>Acceso Ilimitado, Precios Inigualables</h1>
+                <p>Tu centro de confianza para todas tus suscripciones y servicios digitales.</p>
+                <button class="hero-button" onclick="document.getElementById('spotify').scrollIntoView({ behavior: 'smooth' });">Ver Ofertas</button>
+            </div>
+        </section>
         <section id="spotify" class="product-section">
             <h2>Spotify</h2>
             <div class="grid-container">
@@ -150,18 +167,37 @@
             const suggestionsContainer = document.getElementById('suggestions-container');
             const allProductCards = document.querySelectorAll('.product-card');
             const allProductSections = document.querySelectorAll('.product-section');
+            const helpBubble = document.getElementById('help-bubble');
+            const contactIcon = document.getElementById('contact-icon');
+            const contactTooltip = document.getElementById('contact-tooltip');
+            const heroSection = document.getElementById('hero');
             const currencyBtn = document.getElementById('currency-btn');
             const currencyDropdown = document.getElementById('currency-dropdown');
             const currentCurrencySpan = document.getElementById('current-currency');
             const priceElements = document.querySelectorAll('.price');
-            const helpBubble = document.getElementById('help-bubble');
-            const contactIcon = document.getElementById('contact-icon');
-            const contactTooltip = document.getElementById('contact-tooltip');
 
             const currencySymbols = { USD: '$', EUR: '€', MXN: 'MXN $', PEN: 'S/', ARS: 'ARS $', COP: 'COP $', VES: 'Bs.', CLP: 'CLP $' };
 
-            currencyBtn.addEventListener('click', (e) => { e.stopPropagation(); currencyDropdown.classList.toggle('show'); });
+            if (heroSection) {
+                setTimeout(() => heroSection.classList.add('hidden'), 2500);
+            }
+
+            if(contactTooltip){
+                contactTooltip.innerHTML = `<strong>Aviso importante:</strong><br>Esta página es para ver precios en su moneda. Las compras se realizan por nuestras redes sociales: Instagram, TikTok, etc.`;
+                setTimeout(() => {
+                    if (helpBubble) {
+                        helpBubble.classList.add('visible');
+                        contactTooltip.classList.add('visible');
+                        setTimeout(() => contactTooltip.classList.remove('visible'), 3000);
+                    }
+                }, 1750);
+            }
+
+            contactIcon.addEventListener('click', (e) => { e.stopPropagation(); contactTooltip.classList.toggle('visible'); });
+            document.addEventListener('click', () => { if (contactTooltip && contactTooltip.classList.contains('visible')) contactTooltip.classList.remove('visible'); });
+            window.addEventListener('scroll', () => { if (contactTooltip && contactTooltip.classList.contains('visible')) contactTooltip.classList.remove('visible'); });
             
+            currencyBtn.addEventListener('click', (e) => { e.stopPropagation(); currencyDropdown.classList.toggle('show'); });
             currencyDropdown.addEventListener('click', (e) => {
                 if (e.target.tagName === 'LI') {
                     const currency = e.target.dataset.currency;
@@ -178,34 +214,17 @@
                     const newPrice = basePrice * rate;
                     const symbol = currencySymbols[currency] || '$';
                     let formattedPrice = ['COP', 'ARS', 'CLP'].includes(currency) ? newPrice.toLocaleString('es-CO', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) : newPrice.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                    priceEl.textContent = symbol + formattedPrice;
+                    priceEl.textContent = symbol + " " + formattedPrice;
                 });
             }
-
-            if(contactTooltip){
-                contactTooltip.innerHTML = `<strong>Aviso importante:</strong><br>Esta página es para ver precios en su moneda. Las compras se realizan por nuestras redes sociales: Instagram, TikTok, etc.`;
-                setTimeout(() => {
-                    if (helpBubble) helpBubble.classList.add('visible');
-                    contactTooltip.classList.add('visible');
-                    setTimeout(() => contactTooltip.classList.remove('visible'), 3000);
-                }, 1750);
-            }
-
-            contactIcon.addEventListener('click', (e) => { e.stopPropagation(); contactTooltip.classList.toggle('visible'); });
-            
-            document.addEventListener('click', () => { if (contactTooltip && contactTooltip.classList.contains('visible')) contactTooltip.classList.remove('visible'); });
-            window.addEventListener('scroll', () => { if (contactTooltip && contactTooltip.classList.contains('visible')) contactTooltip.classList.remove('visible'); });
 
             searchInput.addEventListener('input', () => {
                 const searchTerm = searchInput.value.toLowerCase().trim();
                 clearSearchIcon.style.display = searchTerm ? 'block' : 'none';
-
                 allProductCards.forEach(card => card.classList.toggle('hidden', !card.getAttribute('data-name').toLowerCase().includes(searchTerm)));
-
                 allProductSections.forEach(section => {
                     section.style.display = section.querySelector('.product-card:not(.hidden)') ? 'block' : 'none';
                 });
-                
                 if (searchTerm.length > 0) {
                     const suggestions = [...new Set(Array.from(allProductCards).map(c => c.getAttribute('data-name')).filter(n => n.toLowerCase().includes(searchTerm)))].slice(0, 5);
                     displaySuggestions(suggestions);
@@ -227,6 +246,8 @@
                 searchInput.dispatchEvent(new Event('input'));
                 suggestionsContainer.style.display = 'none';
             };
+            
+            document.addEventListener('click', (e) => { if (!e.target.closest('.search-bar') && !e.target.closest('.currency-selector')) currencyDropdown.classList.remove('show'); });
         });
     </script>
 </body>
