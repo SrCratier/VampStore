@@ -103,14 +103,14 @@
     <script>
         const contentfulClient = contentful.createClient({
             space: 'n9v6wavle4it',
-            accessToken: 'tsHHFmUCPhHzL5HLL-J3LXZtZWJrGxfcrWIsQiaYZHo'
+            accessToken: 'tsHHFmUCPhHzL5HLL-J3LXZtZWJrGxfcrWlsQiaYZHo'
         });
 
         document.addEventListener('DOMContentLoaded', () => {
             const mainContent = document.getElementById('main-content');
             const categoryNavList = document.getElementById('category-nav-list');
 
-            contentfulClient.getEntries({ content_type: 'vampStore' })
+            contentfulClient.getEntries({ content_type: 'vampstore' })
             .then((response) => {
                 const categories = [...new Set(response.items.map(item => item.fields.categoria))];
 
