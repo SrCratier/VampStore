@@ -111,7 +111,7 @@
             const mainContent = document.getElementById('main-content');
             const categoryNavList = document.getElementById('category-nav-list');
 
-            contentfulClient.getEntries({ content_type: 'producto', order: 'fields.categoria' })
+            contentfulClient.getEntries({ content_type: 'idproducto', order: 'fields.categoria' })
             .then((response) => {
                 const categories = [...new Set(response.items.map(item => item.fields.categoria))];
 
