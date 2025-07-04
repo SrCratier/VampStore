@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VampStore - Servicios Digitales Premium</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/contentful@latest/dist/contentful.browser.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo-container">
+                <div class="logo" onclick="window.location.href='#'">VampStore</div>
+            </div>
+            <div class="header-right-controls">
+                <a href="https://www.instagram.com/nvxonspotify/" target="_blank" class="references-btn">
+                    <i class='bx bxs-badge-check'></i> Nuestras referencias
+                </a>
+                 <div class="search-bar">
+                    <i class="bx bx-search search-icon"></i>
+                    <input type="text" id="search-input" placeholder="Buscar productos...">
+                    <i class='bx bx-x clear-search' id="clear-search-icon"></i>
+                    <div id="suggestions-container" class="suggestions-container"></div>
+                </div>
+                <div class="currency-selector">
+                    <button id="currency-btn" class="currency-btn">
+                        <i class='bx bx-dollar-circle'></i>
+                        <span id="current-currency">USD</span> <i class='bx bx-chevron-down'></i>
+                    </button>
+                    <ul id="currency-dropdown" class="currency-dropdown">
+                        <li data-currency="USD" data-rate="1">USD</li>
+                        <li data-currency="MXN" data-rate="18.76">MXN</li>
+                        <li data-currency="PEN" data-rate="3.56">PEN</li>
+                        <li data-currency="ARS" data-rate="1225">ARS</li>
+                        <li data-currency="COP" data-rate="4000">COP</li>
+                        <li data-currency="VES" data-rate="109.55">VES</li>
+                        <li data-currency="EUR" data-rate="0.85">EUR</li>
+                        <li data-currency="CLP" data-rate="933">CLP</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav class="main-nav">
+        <button class="nav-arrow left-arrow" id="left-arrow"><i class='bx bx-chevron-left'></i></button>
+        <div class="nav-scroll-container">
+            <ul id="category-nav-list">
+                <!-- Las categorías se generarán aquí dinámicamente -->
+            </ul>
+        </div>
+        <button class="nav-arrow right-arrow" id="right-arrow"><i class='bx bx-chevron-right'></i></button>
+    </nav>
+    
+    <main id="main-content">
+        <!-- El contenido y las secciones se generarán aquí dinámicamente -->
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h4>VampStore</h4>
+                <ul>
+                    <li><a href="https://www.atom.bio/vampstore" target="_blank">Sobre nosotros</a></li>
+                    <li><a href="https://pasteview.com/da9158e" target="_blank">Términos y Condiciones</a></li>
+                    <li><a href="https://pasteview.com/da9158e" target="_blank">Política de Privacidad</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Ayuda</h4>
+                <ul>
+                    <li><a href="https://pasteview.com/da9158e" target="_blank">Preguntas Frecuentes (FAQ)</a></li>
+                    <li><a href="https://pasteview.com/da9158e" target="_blank">Cómo activar un producto</a></li>
+                    <li><a href="https://www.instagram.com/nvxonspotify/" target="_blank">Contacta con nosotros</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Comunidad</h4>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/people/VampStore/61570616348226/" target="_blank"><i class='bx bxl-facebook-square'></i></a>
+                    <a href="https://www.tiktok.com/@vamp_stores" target="_blank"><i class='bx bxl-tiktok'></i></a>
+                    <a href="https://www.instagram.com/nvxonspotify/" target="_blank"><i class='bx bxl-instagram-alt'></i></a>
+                    <a href="https://discord.com/invite/s6erV2aev5" target="_blank"><i class='bx bxl-discord-alt'></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 VampStore. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <div id="help-bubble" class="help-bubble-container">
+        <div id="contact-tooltip" class="help-tooltip"></div>
+        <div id="contact-icon" class="help-icon">
+            <i class='bx bx-help-circle'></i>
+        </div>
+    </div>
+
+    <script>
+        const contentfulClient = contentful.createClient({
+            space: 'n9v6wavle4it',
+            accessToken: 'tsHHFmUCPhHzL5HLL-J3LXZtZWJrGxfcrWIsQiaYZHo'
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const mainContent = document.getElementById('main-content');
+            const categoryNavList = document.getElementById('category-nav-list');
+
+            contentfulClient.getEntries({ content_type: 'producto', order: 'fields.categoria' })
+            .then((response) => {
+                const categories = [...new Set(response.items.map(item => item.fields.categoria))];
+
+                categories.forEach(category => {
+                    if (!category) return;
+                    const categoryId = category.toLowerCase().replace(/ /g, '-');
+                    const navLink = document.createElement('li');
+                    navLink.innerHTML = `<a href="#${categoryId}">${category}</a>`;
+                    categoryNavList.appendChild(navLink);
+                    
+                    const sectionHTML = `
+                        <section id="${categoryId}" class="product-section">
+                            <h2>${category}</h2>
+                            <div class="grid-container"></div>
+                        </section>
+                    `;
+                    mainContent.innerHTML += sectionHTML;
+                });
+
+                response.items.forEach(item => {
+                    const fields = item.fields;
+                    if (!fields.categoria) return;
+
+                    const productCardHTML = createProductCard(fields);
+                    const categoryId = fields.categoria.toLowerCase().replace(/ /g, '-');
+                    const sectionGrid = mainContent.querySelector(`#${categoryId} .grid-container`);
+                    if (sectionGrid) sectionGrid.innerHTML += productCardHTML;
+                });
+
+                initializePageScripts();
+            })
+            .catch(console.error);
+        });
+
+        function createProductCard(data) {
+            const featuresHTML = data.caracteristicas ? data.caracteristicas.map(feature => `<li><i class='bx bxs-zap'></i>${feature}</li>`).join('') : '';
+            const paypalButtonHTML = data.linkPayPal ? `<a href="${data.linkPayPal}" target="_blank" class="paypal-btn" title="Pagar con PayPal"><i class='bx bxl-paypal'></i></a>` : '';
+            
+            return `
+                <div class="product-card" data-name="${data.producto}">
+                    <img src="${'https:' + data.imagen.fields.file.url}" alt="${data.nombre}">
+                    <div class="card-body">
+                        <h3>${data.nombre}</h3>
+                        <p class="product-desc">${data.descripcion}</p>
+                        <ul class="product-features">${featuresHTML}</ul>
+                    </div>
+                    <div class="card-footer">
+                        <span class="price" data-price-usd="${data.precioUSD}">$${data.precioUSD.toFixed(2)}</span>
+                        <div class="card-buttons">
+                            <a href="https://www.instagram.com/nvxonspotify/" target="_blank" class="cart-btn" title="Contactar"><i class='bx bx-cart'></i></a>
+                            ${paypalButtonHTML}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function initializePageScripts() {
+            const searchInput = document.getElementById('search-input');
+            const clearSearchIcon = document.getElementById('clear-search-icon');
+            const suggestionsContainer = document.getElementById('suggestions-container');
+            const allProductCards = document.querySelectorAll('.product-card');
+            const allProductSections = document.querySelectorAll('.product-section');
+            const helpBubble = document.getElementById('help-bubble');
+            const contactIcon = document.getElementById('contact-icon');
+            const contactTooltip = document.getElementById('contact-tooltip');
+            const currencyBtn = document.getElementById('currency-btn');
+            const currencyDropdown = document.getElementById('currency-dropdown');
+            const currentCurrencySpan = document.getElementById('current-currency');
+            const priceElements = document.querySelectorAll('.price');
+            const navScrollContainer = document.querySelector('.nav-scroll-container');
+            const leftArrow = document.getElementById('left-arrow');
+            const rightArrow = document.getElementById('right-arrow');
+
+            const currencySymbols = { USD: '$', EUR: '€', MXN: 'MXN $', PEN: 'S/', ARS: 'ARS $', COP: 'COP $', VES: 'Bs.', CLP: 'CLP $' };
+
+            if(contactTooltip){
+                contactTooltip.innerHTML = `<strong>Aviso importante:</strong><br>Esta página es para ver precios en su moneda. Las compras se realizan por nuestras redes sociales.`;
+                setTimeout(() => {
+                    if (helpBubble) helpBubble.classList.add('visible');
+                }, 2500);
+            }
+
+            contactIcon.addEventListener('click', (e) => { e.stopPropagation(); contactTooltip.classList.toggle('visible'); });
+            document.addEventListener('click', () => { if (contactTooltip && contactTooltip.classList.contains('visible')) contactTooltip.classList.remove('visible'); });
+            window.addEventListener('scroll', () => { if (contactTooltip && contactTooltip.classList.contains('visible')) contactTooltip.classList.remove('visible'); });
+            
+            currencyBtn.addEventListener('click', (e) => { e.stopPropagation(); currencyDropdown.classList.toggle('show'); });
+            currencyDropdown.addEventListener('click', (e) => {
+                if (e.target.tagName === 'LI') {
+                    const currency = e.target.dataset.currency;
+                    const rate = parseFloat(e.target.dataset.rate);
+                    updatePrices(currency, rate);
+                    currentCurrencySpan.textContent = currency;
+                    currencyDropdown.classList.remove('show');
+                }
+            });
+            document.addEventListener('click', (e) => { if (e.target.closest('.currency-selector') === null) currencyDropdown.classList.remove('show'); });
+
+            function updatePrices(currency, rate) {
+                priceElements.forEach(priceEl => {
+                    const basePrice = parseFloat(priceEl.dataset.priceUsd);
+                    const newPrice = basePrice * rate;
+                    const symbol = currencySymbols[currency] || '$';
+                    let formattedPrice = ['COP', 'ARS', 'CLP'].includes(currency) ? newPrice.toLocaleString('es-CO', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) : newPrice.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    priceEl.textContent = symbol + " " + formattedPrice;
+                });
+            }
+
+            searchInput.addEventListener('input', () => {
+                const searchTerm = searchInput.value.toLowerCase().trim();
+                clearSearchIcon.style.display = searchTerm ? 'block' : 'none';
+                allProductCards.forEach(card => card.classList.toggle('hidden', !card.getAttribute('data-name').toLowerCase().includes(searchTerm)));
+                allProductSections.forEach(section => {
+                    section.style.display = section.querySelector('.product-card:not(.hidden)') ? 'block' : 'none';
+                });
+                if (searchTerm.length > 0) {
+                    const suggestions = [...new Set(Array.from(allProductCards).map(c => c.getAttribute('data-name')).filter(n => n.toLowerCase().includes(searchTerm)))].slice(0, 5);
+                    displaySuggestions(suggestions);
+                } else {
+                    suggestionsContainer.style.display = 'none';
+                }
+            });
+
+            clearSearchIcon.addEventListener('click', () => { searchInput.value = ''; searchInput.dispatchEvent(new Event('input')); });
+
+            function displaySuggestions(suggestions) {
+                if (suggestions.length === 0) { suggestionsContainer.style.display = 'none'; return; }
+                suggestionsContainer.innerHTML = suggestions.map(suggestion => `<div class="suggestion-item" onclick="selectSuggestion(this)">${suggestion}</div>`).join('');
+                suggestionsContainer.style.display = 'block';
+            }
+
+            window.selectSuggestion = function(element) {
+                searchInput.value = element.textContent;
+                searchInput.dispatchEvent(new Event('input'));
+                suggestionsContainer.style.display = 'none';
+            };
+            
+            leftArrow.addEventListener('click', () => { navScrollContainer.scrollBy({ left: -200, behavior: 'smooth' }); });
+            rightArrow.addEventListener('click', () => { navScrollContainer.scrollBy({ left: 200, behavior: 'smooth' }); });
+        }
+    </script>
+</body>
+</html>
