@@ -21,12 +21,6 @@
                 </a>
             </div>
             <div class="header-right-controls">
-                <div class="search-bar">
-                    <i class="bx bx-search search-icon"></i>
-                    <input type="text" id="search-input" placeholder="Buscar productos...">
-                    <i class='bx bx-x clear-search' id="clear-search-icon"></i>
-                    <div id="suggestions-container" class="suggestions-container"></div>
-                </div>
                 <div class="currency-selector">
                     <button id="currency-btn" class="currency-btn">
                         <i class='bx bx-dollar-circle'></i>
@@ -43,6 +37,12 @@
                         <li data-currency="CLP" data-rate="933">CLP</li>
                     </ul>
                 </div>
+            </div>
+             <div class="search-bar">
+                <i class="bx bx-search search-icon"></i>
+                <input type="text" id="search-input" placeholder="Buscar productos...">
+                <i class='bx bx-x clear-search' id="clear-search-icon"></i>
+                <div id="suggestions-container" class="suggestions-container"></div>
             </div>
         </div>
     </header>
@@ -156,15 +156,15 @@
             <div class="footer-column">
                 <h4>Comunidad</h4>
                 <div class="social-icons">
-                    <a href="#"><i class='bx bxl-facebook-square'></i></a>
-                    <a href="#"><i class='bx bxl-twitter'></i></a>
+                    <a href="https://www.facebook.com/people/VampStore/61570616348226/" target="_blank"><i class='bx bxl-facebook-square'></i></a>
+                    <a href="https://www.tiktok.com/@vamp_stores" target="_blank"><i class='bx bxl-tiktok'></i></a>
                     <a href="https://www.instagram.com/nvxonspotify/" target="_blank"><i class='bx bxl-instagram-alt'></i></a>
-                    <a href="#"><i class='bx bxl-discord-alt'></i></a>
+                    <a href="https://discord.com/invite/s6erV2aev5" target="_blank"><i class='bx bxl-discord-alt'></i></a>
                 </div>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2024 VampStore. Todos los derechos reservados.</p>
+            <p>© 2024 VampStore. Todos los derechos reservados.</p>
         </div>
     </footer>
     <div id="help-bubble" class="help-bubble-container">
@@ -201,9 +201,7 @@
             if(contactTooltip){
                 contactTooltip.innerHTML = `<strong>Aviso importante:</strong><br>Esta página es para ver precios en su moneda. Las compras se realizan por nuestras redes sociales: Instagram, TikTok, etc.`;
                 setTimeout(() => {
-                    if (helpBubble) {
-                        helpBubble.classList.add('visible');
-                    }
+                    if (helpBubble) helpBubble.classList.add('visible');
                 }, 1750);
             }
 
