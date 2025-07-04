@@ -63,9 +63,9 @@
     <footer>
         <div class="footer-container">
             <div class="footer-column">
-                <h4></h4>
+                <h4>VampStore</h4>
                 <ul>
-                    <li><a href="https://www.atom.bio/" target="_blank">Sobre nosotros</a></li>
+                    <li><a href="https://www.atom.bio/vampstore" target="_blank">Sobre nosotros</a></li>
                     <li><a href="https://pasteview.com/da9158e" target="_blank">Términos y Condiciones</a></li>
                     <li><a href="https://pasteview.com/da9158e" target="_blank">Política de Privacidad</a></li>
                 </ul>
@@ -103,14 +103,14 @@
     <script>
         const contentfulClient = contentful.createClient({
             space: 'n9v6wavle4it',
-            accessToken: 'tsHHFmUCPhHzL5HLL-J3LXZtZWJrGxfcrWlsQiaYZHo'
+            accessToken: 'tsHHFmUCPhHzL5HLL-J3LXZtZWJrGxfcrWIsQiaYZHo'
         });
 
         document.addEventListener('DOMContentLoaded', () => {
             const mainContent = document.getElementById('main-content');
             const categoryNavList = document.getElementById('category-nav-list');
 
-            contentfulClient.getEntries({ content_type: 'vampstore' })
+            contentfulClient.getEntries({ content_type: 'vampStore' })
             .then((response) => {
                 const categories = [...new Set(response.items.map(item => item.fields.categoria))];
 
