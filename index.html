@@ -12,6 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/contentful@latest/dist/contentful.browser.min.js"></script>
 </head>
 <body>
+
     <header>
         <div class="header-container">
             <div class="logo-container">
@@ -51,14 +52,12 @@
         <button class="nav-arrow left-arrow" id="left-arrow"><i class='bx bx-chevron-left'></i></button>
         <div class="nav-scroll-container">
             <ul id="category-nav-list">
-                <!-- Las categorías se generarán aquí dinámicamente -->
             </ul>
         </div>
         <button class="nav-arrow right-arrow" id="right-arrow"><i class='bx bx-chevron-right'></i></button>
     </nav>
     
     <main id="main-content">
-        <!-- El contenido y las secciones se generarán aquí dinámicamente -->
     </main>
 
     <footer>
@@ -104,14 +103,14 @@
     <script>
         const contentfulClient = contentful.createClient({
             space: 'n9v6wavle4it',
-            accessToken: 'tsHHFmUCPhHzL5HLL-J3LXZtZWJrGxfcrWlsQiaYZHo'
+            accessToken: 'tsHHFmUCPhHzL5HLL-J3LXZtZWJrGxfcrWIsQiaYZHo'
         });
 
         document.addEventListener('DOMContentLoaded', () => {
             const mainContent = document.getElementById('main-content');
             const categoryNavList = document.getElementById('category-nav-list');
 
-            contentfulClient.getEntries({ content_type: 'idproducto' })
+            contentfulClient.getEntries({ content_type: 'vampStore' })
             .then((response) => {
                 const categories = [...new Set(response.items.map(item => item.fields.categoria))];
 
@@ -133,7 +132,7 @@
 
                 response.items.forEach(item => {
                     const fields = item.fields;
-                    if (!fields.categoria) return;
+                    if (!fields.categoria || !fields.imagen) return;
 
                     const productCardHTML = createProductCard(fields);
                     const categoryId = fields.categoria.toLowerCase().replace(/ /g, '-');
@@ -149,17 +148,18 @@
         function createProductCard(data) {
             const featuresHTML = data.caracteristicas ? data.caracteristicas.map(feature => `<li><i class='bx bxs-zap'></i>${feature}</li>`).join('') : '';
             const paypalButtonHTML = data.linkPayPal ? `<a href="${data.linkPayPal}" target="_blank" class="paypal-btn" title="Pagar con PayPal"><i class='bx bxl-paypal'></i></a>` : '';
+            const imageUrl = data.imagen && data.imagen.fields && data.imagen.fields.file ? 'https:' + data.imagen.fields.file.url : '';
             
             return `
-                <div class="product-card" data-name="${data.producto}">
-                    <img src="${'https:' + data.imagen.fields.file.url}" alt="${data.nombre}">
+                <div class="product-card" data-name="${data.idproducto || data.nombre}">
+                    <img src="${imageUrl}" alt="${data.nombre}">
                     <div class="card-body">
                         <h3>${data.nombre}</h3>
                         <p class="product-desc">${data.descripcion}</p>
                         <ul class="product-features">${featuresHTML}</ul>
                     </div>
                     <div class="card-footer">
-                        <span class="price" data-price-usd="${data.precioUSD}">$${data.precioUSD.toFixed(2)}</span>
+                        <span class="price" data-price-usd="${data.precioUSD}">$${(data.precioUSD || 0).toFixed(2)}</span>
                         <div class="card-buttons">
                             <a href="https://www.instagram.com/nvxonspotify/" target="_blank" class="cart-btn" title="Contactar"><i class='bx bx-cart'></i></a>
                             ${paypalButtonHTML}
