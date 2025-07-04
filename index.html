@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/contentful@latest/dist/contentful.browser.min.js"></script>
 </head>
 <body>
 
@@ -18,9 +19,6 @@
                 <div class="logo" onclick="window.location.href='#'">VampStore</div>
             </div>
             <div class="header-right-controls">
-                <a href="https://www.instagram.com/nvxonspotify/" target="_blank" class="references-btn">
-                    <i class='bx bxs-badge-check'></i> Nuestras referencias
-                </a>
                 <div class="search-bar">
                     <i class="bx bx-search search-icon"></i>
                     <input type="text" id="search-input" placeholder="Buscar productos...">
@@ -50,91 +48,23 @@
     <nav class="main-nav">
         <button class="nav-arrow left-arrow" id="left-arrow"><i class='bx bx-chevron-left'></i></button>
         <div class="nav-scroll-container">
-            <ul>
-                <li><a href="#spotify">Spotify</a></li>
-                <li><a href="#disney">Disney+</a></li>
-                <li><a href="#hbo">HBO Max</a></li>
-                <li><a href="#primevideo">Prime Video</a></li>
-                <li><a href="#netflix">Netflix</a></li>
-                <li><a href="#crunchyroll">Crunchyroll</a></li>
-                <li><a href="#mc-accounts">MC Accounts</a></li>
-                <li><a href="#robux">Robux</a></li>
-                <li><a href="#fortnite">Fortnite Services</a></li>
-                <li><a href="#ig-followers">IG Followers</a></li>
-                <li><a href="#discord">Discord Services</a></li>
-                <li><a href="#onlyfans">Onlyfans</a></li>
-                <li><a href="#gamepass">Xbox Game Pass</a></li>
-                <li><a href="#twitch">Twitch Services</a></li>
-                <li><a href="#youtube">Youtube Premium</a></li>
+            <ul id="category-nav-list">
+                <!-- Las categorías se generarán aquí dinámicamente -->
             </ul>
         </div>
         <button class="nav-arrow right-arrow" id="right-arrow"><i class='bx bx-chevron-right'></i></button>
     </nav>
+    
+    <div class="secondary-controls">
+        <a href="https://www.instagram.com/nvxonspotify/" target="_blank" class="references-btn">
+            <i class='bx bxs-badge-check'></i> Nuestras referencias
+        </a>
+    </div>
 
     <main id="main-content">
-        <section id="hero" class="hero visible">
-            <div class="hero-content">
-                <h1>Acceso Ilimitado, Precios Inigualables</h1>
-                <p>Tu centro de confianza para todas tus suscripciones y servicios digitales.</p>
-            </div>
-        </section>
-        <section id="spotify" class="product-section">
-            <h2>Spotify</h2>
-            <div class="grid-container">
-                <div class="product-card" data-name="Spotify Premium 1 Mes"><img src="images/spotify1.png" alt="Spotify Premium"><div class="card-body"><h3>Spotify Premium</h3><p class="product-desc">1 Mes</p><ul class="product-features"><li><i class='bx bxs-zap'></i>Canciones sin anuncios</li><li><i class='bx bxs-zap'></i>Sin APKs ni programas externos</li><li><i class='bx bxs-zap'></i>Escucha sin conexión</li><li><i class='bx bxs-zap'></i>Garantía por 30 Días</li></ul></div><div class="card-footer"><span class="price" data-price-usd="2.00">$2.00</span><div class="card-buttons"><a href="https://www.instagram.com/nvxonspotify/" target="_blank" class="cart-btn" title="Contactar"><i class='bx bx-cart'></i></a><a href="https://www.paypal.com/ncp/payment/9G2X4VBUGW62S" target="_blank" class="paypal-btn" title="Pagar con PayPal"><i class='bx bxl-paypal'></i></a></div></div></div>
-                <div class="product-card" data-name="Spotify Premium 2 Meses"><img src="images/spotify2.png" alt="Spotify Premium"><div class="card-body"><h3>Spotify Premium</h3><p class="product-desc">2 Meses</p><ul class="product-features"><li><i class='bx bxs-zap'></i>Canciones sin anuncios</li><li><i class='bx bxs-zap'></i>Sin APKs ni programas externos</li><li><i class='bx bxs-zap'></i>Escucha sin conexión</li><li><i class='bx bxs-zap'></i>Garantía por 60 Días</li></ul></div><div class="card-footer"><span class="price" data-price-usd="3.50">$3.50</span><div class="card-buttons"><a href="https://www.instagram.com/nvxonspotify/" target="_blank" class="cart-btn" title="Contactar"><i class='bx bx-cart'></i></a><a href="https://www.paypal.com/ncp/payment/33PWTYTE9AW5E" target="_blank" class="paypal-btn" title="Pagar con PayPal"><i class='bx bxl-paypal'></i></a></div></div></div>
-                <div class="product-card" data-name="Spotify Premium 3 Meses"><img src="images/spotify3.png" alt="Spotify Premium"><div class="card-body"><h3>Spotify Premium</h3><p class="product-desc">3 Meses</p><ul class="product-features"><li><i class='bx bxs-zap'></i>Canciones sin anuncios</li><li><i class='bx bxs-zap'></i>Sin APKs ni programas externos</li><li><i class='bx bxs-zap'></i>Activación vía login</li><li><i class='bx bxs-zap'></i>Garantía por 90 Días</li></ul></div><div class="card-footer"><span class="price" data-price-usd="5.25">$5.25</span><div class="card-buttons"><a href="https://www.instagram.com/nvxonspotify/" target="_blank" class="cart-btn" title="Contactar"><i class='bx bx-cart'></i></a><a href="https://www.paypal.com/ncp/payment/X435J8L4J92Q2" target="_blank" class="paypal-btn" title="Pagar con PayPal"><i class='bx bxl-paypal'></i></a></div></div></div>
-                <div class="product-card" data-name="Spotify Premium 6 Meses"><img src="images/spotify4.png" alt="Spotify Premium"><div class="card-body"><h3>Spotify Premium</h3><p class="product-desc">6 Meses</p><ul class="product-features"><li><i class='bx bxs-zap'></i>Canciones sin anuncios</li><li><i class='bx bxs-zap'></i>Sin APKs ni programas externos</li><li><i class='bx bxs-zap'></i>Activación vía login</li><li><i class='bx bxs-zap'></i>Garantía por 180 Días</li></ul></div><div class="card-footer"><span class="price" data-price-usd="9.80">$9.80</span><div class="card-buttons"><a href="https://www.instagram.com/nvxonspotify/" target="_blank" class="cart-btn" title="Contactar"><i class='bx bx-cart'></i></a><a href="https://www.paypal.com/ncp/payment/YTW49RHJUZQBJ" target="_blank" class="paypal-btn" title="Pagar con PayPal"><i class='bx bxl-paypal'></i></a></div></div></div>
-                <div class="product-card" data-name="Spotify Premium 12 Meses"><img src="images/spotify1.png" alt="Spotify Premium"><div class="card-body"><h3>Spotify Premium</h3><p class="product-desc">12 Meses</p><ul class="product-features"><li><i class='bx bxs-zap'></i>Canciones sin anuncios</li><li><i class='bx bxs-zap'></i>Sin APKs ni programas externos</li><li><i class='bx bxs-zap'></i>Activación vía login</li><li><i class='bx bxs-zap'></i>Garantía por 365 Días</li></ul></div><div class="card-footer"><span class="price" data-price-usd="18.90">$18.90</span><div class="card-buttons"><a href="https://www.instagram.com/nvxonspotify/" target="_blank" class="cart-btn" title="Contactar"><i class='bx bx-cart'></i></a><a href="https://www.paypal.com/ncp/payment/3L4FRRXU6WVZ8" target="_blank" class="paypal-btn" title="Pagar con PayPal"><i class='bx bxl-paypal'></i></a></div></div></div>
-                <div class="product-card" data-name="Spotify Familiar 3 Meses"><img src="images/spotifyfam.png" alt="Spotify Familiar"><div class="card-body"><h3>Spotify Premium Familiar</h3><p class="product-desc">3 Meses</p><ul class="product-features"><li><i class='bx bxs-zap'></i>Premium para hasta 6 cuentas</li><li><i class='bx bxs-zap'></i>Canciones sin anuncios</li><li><i class='bx bxs-zap'></i>Garantía por 90 Días</li></ul></div><div class="card-footer"><span class="price" data-price-usd="19.75">$19.75</span><div class="card-buttons"><a href="https://www.instagram.com/nvxonspotify/" target="_blank" class="cart-btn" title="Contactar"><i class='bx bx-cart'></i></a><a href="https://www.paypal.com/ncp/payment/T3W73TQXP446Q" target="_blank" class="paypal-btn" title="Pagar con PayPal"><i class='bx bxl-paypal'></i></a></div></div></div>
-                <div class="product-card" data-name="Spotify Familiar 6 Meses"><img src="images/spotifyfam.png" alt="Spotify Familiar"><div class="card-body"><h3>Spotify Premium Familiar</h3><p class="product-desc">6 Meses</p><ul class="product-features"><li><i class='bx bxs-zap'></i>Premium para hasta 6 cuentas</li><li><i class='bx bxs-zap'></i>Canciones sin anuncios</li><li><i class='bx bxs-zap'></i>Garantía por 180 Días</li></ul></div><div class="card-footer"><span class="price" data-price-usd="26.75">$26.75</span><div class="card-buttons"><a href="https://www.instagram.com/nvxonspotify/" target="_blank" class="cart-btn" title="Contactar"><i class='bx bx-cart'></i></a><a href="https://www.paypal.com/ncp/payment/RFR8UX9S48BSY" target="_blank" class="paypal-btn" title="Pagar con PayPal"><i class='bx bxl-paypal'></i></a></div></div></div>
-                <div class="product-card" data-name="Spotify Familiar 12 Meses"><img src="images/spotifyfam.png" alt="Spotify Familiar"><div class="card-body"><h3>Spotify Premium Familiar</h3><p class="product-desc">12 Meses</p><ul class="product-features"><li><i class='bx bxs-zap'></i>Premium para hasta 6 cuentas</li><li><i class='bx bxs-zap'></i>Canciones sin anuncios</li><li><i class='bx bxs-zap'></i>Garantía por 365 Días</li></ul></div><div class="card-footer"><span class="price" data-price-usd="37.80">$37.80</span><div class="card-buttons"><a href="https://www.instagram.com/nvxonspotify/" target="_blank" class="cart-btn" title="Contactar"><i class='bx bx-cart'></i></a><a href="https://www.paypal.com/ncp/payment/KACWZREB62RMC" target="_blank" class="paypal-btn" title="Pagar con PayPal"><i class='bx bxl-paypal'></i></a></div></div></div>
-            </div>
-        </section>
-        <section id="disney" class="product-section">
-            <h2>Disney+</h2>
-            <div class="grid-container">
-                <div class="product-card" data-name="Disney+ 3 Meses Cuenta Completa"><img src="images/disney1.png" alt="Disney+"><div class="card-body"><h3>Disney+</h3><p class="product-desc">3 Meses - Cuenta Completa</p><ul class="product-features"><li><i class='bx bxs-zap'></i>Acceso a Disney, Pixar, Marvel, etc.</li><li><i class='bx bxs-zap'></i>Calidad hasta 4K UHD</li><li><i class='bx bxs-zap'></i>Descargas ilimitadas</li><li><i class='bx bxs-zap'></i>Con garantía</li></ul></div><div class="card-footer"><span class="price" data-price-usd="7.75">$7.75</span><div class="card-buttons"><a href="https://www.instagram.com/nvxonspotify/" target="_blank" class="cart-btn full-width" title="Contactar"><i class='bx bx-cart'></i> Contactar</a></div></div></div>
-                <div class="product-card" data-name="Disney+ 3 Meses Perfil"><img src="images/disney1.png" alt="Disney+"><div class="card-body"><h3>Disney+</h3><p class="product-desc">3 Meses - Perfil</p><ul class="product-features"><li><i class='bx bxs-zap'></i>Perfil privado con PIN</li><li><i class='bx bxs-zap'></i>Contenido en alta calidad</li><li><i class='bx bxs-zap'></i>Descargas para ver offline</li><li><i class='bx bxs-zap'></i>Con garantía</li></ul></div><div class="card-footer"><span class="price" data-price-usd="2.00">$2.00</span><div class="card-buttons"><a href="https://www.instagram.com/nvxonspotify/" target="_blank" class="cart-btn full-width" title="Contactar"><i class='bx bx-cart'></i> Contactar</a></div></div></div>
-                <div class="product-card" data-name="Disney+ 12 Meses Cuenta Completa"><img src="images/disney1.png" alt="Disney+"><div class="card-body"><h3>Disney+</h3><p class="product-desc">12 Meses - Cuenta Completa</p><ul class="product-features"><li><i class='bx bxs-zap'></i>Acceso a Disney, Pixar, Marvel, etc.</li><li><i class='bx bxs-zap'></i>Calidad hasta 4K UHD</li><li><i class='bx bxs-zap'></i>Descargas ilimitadas</li><li><i class='bx bxs-zap'></i>Con garantía</li></ul></div><div class="card-footer"><span class="price" data-price-usd="14.00">$14.00</span><div class="card-buttons"><a href="https://www.instagram.com/nvxonspotify/" target="_blank" class="cart-btn full-width" title="Contactar"><i class='bx bx-cart'></i> Contactar</a></div></div></div>
-                <div class="product-card" data-name="Disney+ 12 Meses Perfil"><img src="images/disney1.png" alt="Disney+"><div class="card-body"><h3>Disney+</h3><p class="product-desc">12 Meses - Perfil</p><ul class="product-features"><li><i class='bx bxs-zap'></i>Perfil privado con PIN</li><li><i class='bx bxs-zap'></i>Contenido en alta calidad</li><li><i class='bx bxs-zap'></i>Descargas para ver offline</li><li><i class='bx bxs-zap'></i>Con garantía</li></ul></div><div class="card-footer"><span class="price" data-price-usd="4.00">$4.00</span><div class="card-buttons"><a href="https://www.instagram.com/nvxonspotify/" target="_blank" class="cart-btn full-width" title="Contactar"><i class='bx bx-cart'></i> Contactar</a></div></div></div>
-            </div>
-        </section>
-        <section id="hbo" class="product-section">
-            <h2>HBO Max</h2>
-            <div class="grid-container">
-                <div class="product-card" data-name="HBO Max 12 Meses Cuenta Completa"><img src="images/hbo1.png" alt="HBO Max"><div class="card-body"><h3>HBO Max</h3><p class="product-desc">12 Meses - Cuenta Completa</p><ul class="product-features"><li><i class='bx bxs-zap'></i>HBO, Warner Bros., DC, etc.</li><li><i class='bx bxs-zap'></i>Streaming en alta definición y 4K</li><li><i class='bx bxs-zap'></i>Descarga tus favoritos</li><li><i class='bx bxs-zap'></i>Con garantía</li></ul></div><div class="card-footer"><span class="price" data-price-usd="10.00">$10.00</span><div class="card-buttons"><a href="https://www.instagram.com/nvxonspotify/" target="_blank" class="cart-btn full-width" title="Contactar"><i class='bx bx-cart'></i> Contactar</a></div></div></div>
-                <div class="product-card" data-name="HBO Max 12 Meses Perfil"><img src="images/hbo1.png" alt="HBO Max"><div class="card-body"><h3>HBO Max</h3><p class="product-desc">12 Meses - Perfil</p><ul class="product-features"><li><i class='bx bxs-zap'></i>Perfil privado con PIN</li><li><i class='bx bxs-zap'></i>Contenido en alta calidad</li><li><i class='bx bxs-zap'></i>Descargas disponibles</li><li><i class='bx bxs-zap'></i>Con garantía</li></ul></div><div class="card-footer"><span class="price" data-price-usd="4.50">$4.50</span><div class="card-buttons"><a href="https://www.instagram.com/nvxonspotify/" target="_blank" class="cart-btn full-width" title="Contactar"><i class='bx bx-cart'></i> Contactar</a></div></div></div>
-            </div>
-        </section>
-        <section id="primevideo" class="product-section">
-            <h2>Prime Video</h2>
-            <div class="grid-container">
-                <div class="product-card" data-name="Prime Video 1 Mes Cuenta Completa"><img src="images/primevideo1.png" alt="Prime Video"><div class="card-body"><h3>Prime Video</h3><p class="product-desc">1 Mes - Cuenta Completa</p><ul class="product-features"><li><i class='bx bxs-zap'></i>Películas y series exclusivas</li><li><i class='bx bxs-zap'></i>Calidad 4K UHD incluida</li><li><i class='bx bxs-zap'></i>Descarga para ver offline</li><li><i class='bx bxs-zap'></i>Con garantía</li></ul></div><div class="card-footer"><span class="price" data-price-usd="2.00">$2.00</span><div class="card-buttons"><a href="https://www.instagram.com/nvxonspotify/" target="_blank" class="cart-btn full-width" title="Contactar"><i class='bx bx-cart'></i> Contactar</a></div></div></div>
-                <div class="product-card" data-name="Prime Video 3 Meses Cuenta Completa"><img src="images/primevideo1.png" alt="Prime Video"><div class="card-body"><h3>Prime Video</h3><p class="product-desc">3 Meses - Cuenta Completa</p><ul class="product-features"><li><i class='bx bxs-zap'></i>Películas y series exclusivas</li><li><i class='bx bxs-zap'></i>Calidad 4K UHD incluida</li><li><i class='bx bxs-zap'></i>Descarga para ver offline</li><li><i class='bx bxs-zap'></i>Con garantía</li></ul></div><div class="card-footer"><span class="price" data-price-usd="3.75">$3.75</span><div class="card-buttons"><a href="https://www.instagram.com/nvxonspotify/" target="_blank" class="cart-btn full-width" title="Contactar"><i class='bx bx-cart'></i> Contactar</a></div></div></div>
-                <div class="product-card" data-name="Prime Video 6 Meses Cuenta Completa"><img src="images/primevideo1.png" alt="Prime Video"><div class="card-body"><h3>Prime Video</h3><p class="product-desc">6 Meses - Cuenta Completa</p><ul class="product-features"><li><i class='bx bxs-zap'></i>Películas y series exclusivas</li><li><i class='bx bxs-zap'></i>Calidad 4K UHD incluida</li><li><i class='bx bxs-zap'></i>Descarga para ver offline</li><li><i class='bx bxs-zap'></i>Con garantía</li></ul></div><div class="card-footer"><span class="price" data-price-usd="5.75">$5.75</span><div class="card-buttons"><a href="https://www.instagram.com/nvxonspotify/" target="_blank" class="cart-btn full-width" title="Contactar"><i class='bx bx-cart'></i> Contactar</a></div></div></div>
-                <div class="product-card" data-name="Prime Video 12 Meses Cuenta Completa"><img src="images/primevideo1.png" alt="Prime Video"><div class="card-body"><h3>Prime Video</h3><p class="product-desc">12 Meses - Cuenta Completa</p><ul class="product-features"><li><i class='bx bxs-zap'></i>Películas y series exclusivas</li><li><i class='bx bxs-zap'></i>Calidad 4K UHD incluida</li><li><i class='bx bxs-zap'></i>Descarga para ver offline</li><li><i class='bx bxs-zap'></i>Con garantía</li></ul></div><div class="card-footer"><span class="price" data-price-usd="8.00">$8.00</span><div class="card-buttons"><a href="https://www.instagram.com/nvxonspotify/" target="_blank" class="cart-btn full-width" title="Contactar"><i class='bx bx-cart'></i> Contactar</a></div></div></div>
-                <div class="product-card" data-name="Prime Video 12 Meses Perfil"><img src="images/primevideo1.png" alt="Prime Video"><div class="card-body"><h3>Prime Video</h3><p class="product-desc">12 Meses - Perfil</p><ul class="product-features"><li><i class='bx bxs-zap'></i>Perfil privado con PIN</li><li><i class='bx bxs-zap'></i>Contenido en alta calidad</li><li><i class='bx bxs-zap'></i>Descargas para ver offline</li><li><i class='bx bxs-zap'></i>Con garantía</li></ul></div><div class="card-footer"><span class="price" data-price-usd="4.00">$4.00</span><div class="card-buttons"><a href="https://www.instagram.com/nvxonspotify/" target="_blank" class="cart-btn full-width" title="Contactar"><i class='bx bx-cart'></i> Contactar</a></div></div></div>
-            </div>
-        </section>
-        <section id="netflix" class="product-section">
-            <h2>Netflix</h2>
-            <div class="grid-container">
-                <div class="product-card" data-name="Netflix 1 Mes Cuenta Completa"><img src="images/netflix1.png" alt="Netflix"><div class="card-body"><h3>Netflix 4K</h3><p class="product-desc">1 Mes - Cuenta Completa</p><ul class="product-features"><li><i class='bx bxs-zap'></i>Miles de películas y series</li><li><i class='bx bxs-zap'></i>Resolución Ultra HD (4K)</li><li><i class='bx bxs-zap'></i>Descarga y mira offline</li><li><i class='bx bxs-zap'></i>Con garantía</li></ul></div><div class="card-footer"><span class="price" data-price-usd="9.00">$9.00</span><div class="card-buttons"><a href="https://www.instagram.com/nvxonspotify/" target="_blank" class="cart-btn full-width" title="Contactar"><i class='bx bx-cart'></i> Contactar</a></div></div></div>
-                <div class="product-card" data-name="Netflix 1 Mes Perfil"><img src="images/netflix1.png" alt="Netflix"><div class="card-body"><h3>Netflix 4K</h3><p class="product-desc">1 Mes - Perfil</p><ul class="product-features"><li><i class='bx bxs-zap'></i>Perfil privado con PIN</li><li><i class='bx bxs-zap'></i>Contenido en alta calidad</li><li><i class='bx bxs-zap'></i>Descargas disponibles</li><li><i class='bx bxs-zap'></i>Con garantía</li></ul></div><div class="card-footer"><span class="price" data-price-usd="2.50">$2.50</span><div class="card-buttons"><a href="https://www.instagram.com/nvxonspotify/" target="_blank" class="cart-btn full-width" title="Contactar"><i class='bx bx-cart'></i> Contactar</a></div></div></div>
-            </div>
-        </section>
-        <section id="crunchyroll" class="product-section">
-            <h2>Crunchyroll</h2>
-            <div class="grid-container">
-                <div class="product-card" data-name="Crunchyroll 1 Mes Cuenta Completa"><img src="images/crunchyroll1.png" alt="Crunchyroll"><div class="card-body"><h3>Crunchyroll Fan</h3><p class="product-desc">1 Mes - Cuenta Completa</p><ul class="product-features"><li><i class='bx bxs-zap'></i>La mayor biblioteca de anime</li><li><i class='bx bxs-zap'></i>Sin anuncios</li><li><i class='bx bxs-zap'></i>Nuevos episodios al instante</li><li><i class='bx bxs-zap'></i>Con garantía</li></ul></div><div class="card-footer"><span class="price" data-price-usd="2.00">$2.00</span><div class="card-buttons"><a href="https://www.instagram.com/nvxonspotify/" target="_blank" class="cart-btn full-width" title="Contactar"><i class='bx bx-cart'></i> Contactar</a></div></div></div>
-                <div class="product-card" data-name="Crunchyroll 3 Meses Cuenta Completa"><img src="images/crunchyroll1.png" alt="Crunchyroll"><div class="card-body"><h3>Crunchyroll Fan</h3><p class="product-desc">3 Meses - Cuenta Completa</p><ul class="product-features"><li><i class='bx bxs-zap'></i>La mayor biblioteca de anime</li><li><i class='bx bxs-zap'></i>Sin anuncios</li><li><i class='bx bxs-zap'></i>Nuevos episodios al instante</li><li><i class='bx bxs-zap'></i>Con garantía</li></ul></div><div class="card-footer"><span class="price" data-price-usd="3.75">$3.75</span><div class="card-buttons"><a href="https://www.instagram.com/nvxonspotify/" target="_blank" class="cart-btn full-width" title="Contactar"><i class='bx bx-cart'></i> Contactar</a></div></div></div>
-                <div class="product-card" data-name="Crunchyroll 6 Meses Cuenta Completa"><img src="images/crunchyroll1.png" alt="Crunchyroll"><div class="card-body"><h3>Crunchyroll Fan</h3><p class="product-desc">6 Meses - Cuenta Completa</p><ul class="product-features"><li><i class='bx bxs-zap'></i>La mayor biblioteca de anime</li><li><i class='bx bxs-zap'></i>Sin anuncios</li><li><i class='bx bxs-zap'></i>Nuevos episodios al instante</li><li><i class='bx bxs-zap'></i>Con garantía</li></ul></div><div class="card-footer"><span class="price" data-price-usd="5.75">$5.75</span><div class="card-buttons"><a href="https://www.instagram.com/nvxonspotify/" target="_blank" class="cart-btn full-width" title="Contactar"><i class='bx bx-cart'></i> Contactar</a></div></div></div>
-                <div class="product-card" data-name="Crunchyroll 12 Meses Cuenta Completa"><img src="images/crunchyroll1.png" alt="Crunchyroll"><div class="card-body"><h3>Crunchyroll Fan</h3><p class="product-desc">12 Meses - Cuenta Completa</p><ul class="product-features"><li><i class='bx bxs-zap'></i>La mayor biblioteca de anime</li><li><i class='bx bxs-zap'></i>Sin anuncios</li><li><i class='bx bxs-zap'></i>Nuevos episodios al instante</li><li><i class='bx bxs-zap'></i>Con garantía</li></ul></div><div class="card-footer"><span class="price" data-price-usd="8.25">$8.25</span><div class="card-buttons"><a href="https://www.instagram.com/nvxonspotify/" target="_blank" class="cart-btn full-width" title="Contactar"><i class='bx bx-cart'></i> Contactar</a></div></div></div>
-                <div class="product-card" data-name="Crunchyroll 12 Meses Perfil"><img src="images/crunchyroll1.png" alt="Crunchyroll"><div class="card-body"><h3>Crunchyroll Fan</h3><p class="product-desc">12 Meses - Perfil</p><ul class="product-features"><li><i class='bx bxs-zap'></i>Perfil privado con PIN</li><li><i class='bx bxs-zap'></i>Contenido en alta calidad</li><li><i class='bx bxs-zap'></i>Descargas disponibles</li><li><i class='bx bxs-zap'></i>Con garantía</li></ul></div><div class="card-footer"><span class="price" data-price-usd="4.00">$4.00</span><div class="card-buttons"><a href="https://www.instagram.com/nvxonspotify/" target="_blank" class="cart-btn full-width" title="Contactar"><i class='bx bx-cart'></i> Contactar</a></div></div></div>
-            </div>
-        </section>
+        <!-- El contenido y las secciones se generarán aquí dinámicamente -->
     </main>
+
     <footer>
         <div class="footer-container">
             <div class="footer-column">
@@ -174,7 +104,78 @@
         </div>
     </div>
     <script>
+        const contentfulClient = contentful.createClient({
+            space: 'TU_SPACE_ID',
+            accessToken: 'TU_ACCESS_TOKEN'
+        });
+
         document.addEventListener('DOMContentLoaded', () => {
+            const mainContent = document.getElementById('main-content');
+            const categoryNavList = document.getElementById('category-nav-list');
+
+            contentfulClient.getEntries({ content_type: 'producto', order: 'fields.producto' })
+            .then((response) => {
+                const categories = [...new Set(response.items.map(item => item.fields.categoria))];
+
+                categories.forEach(category => {
+                    if (!category) return;
+                    const categoryId = category.toLowerCase().replace(/ /g, '-');
+
+                    const navLink = document.createElement('li');
+                    navLink.innerHTML = `<a href="#${categoryId}">${category}</a>`;
+                    categoryNavList.appendChild(navLink);
+                    
+                    const sectionHTML = `
+                        <section id="${categoryId}" class="product-section">
+                            <h2>${category}</h2>
+                            <div class="grid-container"></div>
+                        </section>
+                    `;
+                    mainContent.innerHTML += sectionHTML;
+                });
+
+                response.items.forEach(item => {
+                    const fields = item.fields;
+                    if (!fields.categoria) return;
+
+                    const productCardHTML = createProductCard(fields);
+                    const categoryId = fields.categoria.toLowerCase().replace(/ /g, '-');
+                    const sectionGrid = mainContent.querySelector(`#${categoryId} .grid-container`);
+
+                    if (sectionGrid) {
+                        sectionGrid.innerHTML += productCardHTML;
+                    }
+                });
+
+                initializePageScripts();
+            })
+            .catch(console.error);
+        });
+
+        function createProductCard(data) {
+            const featuresHTML = data.caracteristicas ? data.caracteristicas.map(feature => `<li><i class='bx bxs-zap'></i>${feature}</li>`).join('') : '';
+            const paypalButtonHTML = data.linkPayPal ? `<a href="${data.linkPayPal}" target="_blank" class="paypal-btn" title="Pagar con PayPal"><i class='bx bxl-paypal'></i></a>` : '';
+            
+            return `
+                <div class="product-card" data-name="${data.producto}">
+                    <img src="${data.imagen.fields.file.url}" alt="${data.nombre}">
+                    <div class="card-body">
+                        <h3>${data.nombre}</h3>
+                        <p class="product-desc">${data.descripcion}</p>
+                        <ul class="product-features">${featuresHTML}</ul>
+                    </div>
+                    <div class="card-footer">
+                        <span class="price" data-price-usd="${data.precioUSD}">$${data.precioUSD.toFixed(2)}</span>
+                        <div class="card-buttons">
+                            <a href="https://www.instagram.com/nvxonspotify/" target="_blank" class="cart-btn" title="Contactar"><i class='bx bx-cart'></i></a>
+                            ${paypalButtonHTML}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function initializePageScripts() {
             const searchInput = document.getElementById('search-input');
             const clearSearchIcon = document.getElementById('clear-search-icon');
             const suggestionsContainer = document.getElementById('suggestions-container');
@@ -183,7 +184,6 @@
             const helpBubble = document.getElementById('help-bubble');
             const contactIcon = document.getElementById('contact-icon');
             const contactTooltip = document.getElementById('contact-tooltip');
-            const heroSection = document.getElementById('hero');
             const currencyBtn = document.getElementById('currency-btn');
             const currencyDropdown = document.getElementById('currency-dropdown');
             const currentCurrencySpan = document.getElementById('current-currency');
@@ -194,19 +194,11 @@
 
             const currencySymbols = { USD: '$', EUR: '€', MXN: 'MXN $', PEN: 'S/', ARS: 'ARS $', COP: 'COP $', VES: 'Bs.', CLP: 'CLP $' };
 
-            if (heroSection) {
-                setTimeout(() => heroSection.classList.add('hidden'), 2500);
-            }
-
             if(contactTooltip){
                 contactTooltip.innerHTML = `<strong>Aviso importante:</strong><br>Esta página es para ver precios en su moneda. Las compras se realizan por nuestras redes sociales: Instagram, TikTok, etc.`;
                 setTimeout(() => {
-                    if (helpBubble) {
-                        helpBubble.classList.add('visible');
-                        contactTooltip.classList.add('visible');
-                        setTimeout(() => contactTooltip.classList.remove('visible'), 3000);
-                    }
-                }, 1750);
+                    if (helpBubble) helpBubble.classList.add('visible');
+                }, 2500);
             }
 
             contactIcon.addEventListener('click', (e) => { e.stopPropagation(); contactTooltip.classList.toggle('visible'); });
@@ -223,7 +215,7 @@
                     currencyDropdown.classList.remove('show');
                 }
             });
-            document.addEventListener('click', (e) => { if (e.target.closest('.currency-selector') === null) currencyDropdown.classList.remove('show'); });
+            document.addEventListener('click', (e) => { if (!e.target.closest('.currency-selector')) currencyDropdown.classList.remove('show'); });
 
             function updatePrices(currency, rate) {
                 priceElements.forEach(priceEl => {
@@ -266,7 +258,7 @@
             
             leftArrow.addEventListener('click', () => { navScrollContainer.scrollBy({ left: -200, behavior: 'smooth' }); });
             rightArrow.addEventListener('click', () => { navScrollContainer.scrollBy({ left: 200, behavior: 'smooth' }); });
-        });
+        }
     </script>
 </body>
 </html>
