@@ -116,7 +116,7 @@
             const mainContent = document.getElementById('main-content');
             const categoryNavList = document.getElementById('category-nav-list');
 
-            contentfulClient.getEntries({ content_type: 'idproducto' })
+            contentfulClient.getEntries({ content_type: 'vampstore' })
             .then((response) => {
                 const categories = [...new Set(response.items.map(item => item.fields.categoria))];
 
