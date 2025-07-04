@@ -48,10 +48,24 @@ header {
 }
 
 .logo {
-    font-size: 2rem;
+    font-size: 2.2rem;
     font-weight: 700;
-    color: var(--color-accent);
+    color: var(--color-text-primary);
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+    transition: transform 0.2s ease-in-out;
+}
+
+.logo:hover {
+    transform: scale(1.03);
+}
+
+.logo i {
+    color: var(--color-accent);
+    font-size: 1.3em;
 }
 
 .references-btn {
