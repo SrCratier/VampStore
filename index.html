@@ -146,28 +146,29 @@
             .catch(console.error);
         });
 
-        function createProductCard(data) {
-            const featuresHTML = data.caracteristicas ? data.caracteristicas.map(feature => `<li><i class='bx bxs-zap'></i>${feature}</li>`).join('') : '';
-            const paypalButtonHTML = data.linkPayPal ? `<a href="${data.linkPayPal}" target="_blank" class="paypal-btn" title="Pagar con PayPal"><i class='bx bxl-paypal'></i></a>` : '';
-            
-            return `
-                <div class="product-card" data-name="${data.producto}">
-                    <img src="${'https:' + data.imagen.fields.file.url}" alt="${data.nombre}">
-                    <div class="card-body">
-                        <h3>${data.nombre}</h3>
-                        <p class="product-desc">${data.descripcion}</p>
-                        <ul class="product-features">${featuresHTML}</ul>
-                    </div>
-                    <div class="card-footer">
-                        <span class="price" data-price-usd="${data.precioUSD}">$${data.precioUSD.toFixed(2)}</span>
-                        <div class="card-buttons">
-                            <a href="https://www.instagram.com/nvxonspotify/" target="_blank" class="cart-btn" title="Contactar"><i class='bx bx-cart'></i></a>
-                            ${paypalButtonHTML}
-                        </div>
-                    </div>
+function createProductCard(data) {
+    const featuresHTML = data.caracteristicas ? data.caracteristicas.map(feature => `<li><i class='bx bxs-zap'></i>${feature}</li>`).join('') : '';
+    const paypalButtonHTML = data.linkPayPal ? `<a href="${data.linkPayPal}" target="_blank" class="paypal-btn" title="Pagar con PayPal"><i class='bx bxl-paypal'></i></a>` : '';
+    
+    // CORRECCIÓN: Usamos los 'Field ID' exactos de Contentful (ej. data.producto en lugar de data.Producto)
+    return `
+        <div class="product-card" data-name="${data.producto}">
+            <img src="${'https:' + data.imagen.fields.file.url}" alt="${data.nombre}">
+            <div class="card-body">
+                <h3>${data.nombre}</h3>
+                <p class="product-desc">${data.descripcion}</p>
+                <ul class="product-features">${featuresHTML}</ul>
+            </div>
+            <div class="card-footer">
+                <span class="price" data-price-usd="${data.precioUSD}">$${data.precioUSD.toFixed(2)}</span>
+                <div class="card-buttons">
+                    <a href="https://www.instagram.com/nvxonspotify/" target="_blank" class="cart-btn" title="Contactar"><i class='bx bx-cart'></i></a>
+                    ${paypalButtonHTML}
                 </div>
-            `;
-        }
+            </div>
+        </div>
+    `;
+}
 
         function initializePageScripts() {
             const searchInput = document.getElementById('search-input');
