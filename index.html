@@ -58,12 +58,6 @@
     </nav>
     
     <main id="main-content">
-        <section id="hero" class="hero">
-            <div class="hero-content">
-                <h1>Acceso Ilimitado, Precios Inigualables</h1>
-                <p>Tu centro de confianza para todas tus suscripciones y servicios digitales.</p>
-            </div>
-        </section>
     </main>
 
     <footer>
@@ -109,7 +103,7 @@
     <script>
         const contentfulClient = contentful.createClient({
             space: 'n9v6wavle4it',
-            accessToken: 'tsHHFmUCPhHzL5HLL-J3LXZtZWJrGxfcrWlsQiaYZHo'
+            accessToken: 'tsHHFmUCPhHzL5HLL-J3LXZtZWJrGxfcrWIsQiaYZHo'
         });
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -184,7 +178,6 @@
             const helpBubble = document.getElementById('help-bubble');
             const contactIcon = document.getElementById('contact-icon');
             const contactTooltip = document.getElementById('contact-tooltip');
-            const heroSection = document.getElementById('hero');
             const currencyBtn = document.getElementById('currency-btn');
             const currencyDropdown = document.getElementById('currency-dropdown');
             const currentCurrencySpan = document.getElementById('current-currency');
@@ -194,10 +187,6 @@
             const rightArrow = document.getElementById('right-arrow');
 
             const currencySymbols = { USD: '$', EUR: '€', MXN: 'MXN $', PEN: 'S/', ARS: 'ARS $', COP: 'COP $', VES: 'Bs.', CLP: 'CLP $' };
-
-            if (heroSection) {
-                setTimeout(() => heroSection.classList.add('hidden'), 2500);
-            }
 
             if(contactTooltip){
                 contactTooltip.innerHTML = `<strong>Aviso importante:</strong><br>Esta página es para ver precios en su moneda. Las compras se realizan por nuestras redes sociales.`;

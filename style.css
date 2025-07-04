@@ -310,9 +310,8 @@ footer { background-color: var(--color-bg-medium); padding: 3rem 5% 1rem; border
 @media (max-width: 768px) {
     .header-container { flex-direction: column; align-items: stretch; gap: 1rem; }
     .logo-container { order: 1; width: 100%; justify-content: center; }
-    .header-right-controls { order: 3; width: 100%; justify-content: center; }
     .search-bar { order: 2; width: 100%; max-width: none; }
-    .main-nav { padding: 0; }
+    .header-right-controls { order: 3; width: 100%; justify-content: center; margin-top: 0.5rem; }
     .nav-arrow { display: flex; }
     .main-nav:before, .main-nav:after {
         content: '';
