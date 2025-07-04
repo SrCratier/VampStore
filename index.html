@@ -58,6 +58,12 @@
     </nav>
     
     <main id="main-content">
+        <section id="hero" class="hero">
+            <div class="hero-content">
+                <h1>Acceso Ilimitado, Precios Inigualables</h1>
+                <p>Tu centro de confianza para todas tus suscripciones y servicios digitales.</p>
+            </div>
+        </section>
     </main>
 
     <footer>
@@ -110,7 +116,7 @@
             const mainContent = document.getElementById('main-content');
             const categoryNavList = document.getElementById('category-nav-list');
 
-            contentfulClient.getEntries({ content_type: 'vampstore' })
+            contentfulClient.getEntries({ content_type: 'vampStore' })
             .then((response) => {
                 const categories = [...new Set(response.items.map(item => item.fields.categoria))];
 
@@ -178,6 +184,7 @@
             const helpBubble = document.getElementById('help-bubble');
             const contactIcon = document.getElementById('contact-icon');
             const contactTooltip = document.getElementById('contact-tooltip');
+            const heroSection = document.getElementById('hero');
             const currencyBtn = document.getElementById('currency-btn');
             const currencyDropdown = document.getElementById('currency-dropdown');
             const currentCurrencySpan = document.getElementById('current-currency');
@@ -187,6 +194,10 @@
             const rightArrow = document.getElementById('right-arrow');
 
             const currencySymbols = { USD: '$', EUR: '€', MXN: 'MXN $', PEN: 'S/', ARS: 'ARS $', COP: 'COP $', VES: 'Bs.', CLP: 'CLP $' };
+
+            if (heroSection) {
+                setTimeout(() => heroSection.classList.add('hidden'), 2500);
+            }
 
             if(contactTooltip){
                 contactTooltip.innerHTML = `<strong>Aviso importante:</strong><br>Esta página es para ver precios en su moneda. Las compras se realizan por nuestras redes sociales.`;
