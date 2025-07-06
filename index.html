@@ -190,6 +190,16 @@
 
             const currencySymbols = { USD: '$', EUR: '€', Mx: 'Mx $', PEN: 'S/', ARS: 'ARS $', COP: 'COP $', VES: 'Bs.', CLP: 'CLP $' };
             
+            // --- NUEVO CÓDIGO PARA AUTO-SELECCIÓN DE MONEDA ---
+            if (window.VAMP_DEFAULT_CURRENCY && window.VAMP_DEFAULT_CURRENCY !== 'USD') {
+                const defaultCurrencyLi = currencyDropdown.querySelector(`li[data-currency="${window.VAMP_DEFAULT_CURRENCY}"]`);
+                if (defaultCurrencyLi) {
+                    // Simulamos un clic para activar la lógica de cambio de moneda existente
+                    defaultCurrencyLi.click();
+                }
+            }
+            // --- FIN DEL NUEVO CÓDIGO ---
+
             currencyBtn.addEventListener('click', (e) => { e.stopPropagation(); currencyDropdown.classList.toggle('show'); });
             currencyDropdown.addEventListener('click', (e) => {
                 if (e.target.tagName === 'LI') {
@@ -207,7 +217,6 @@
                     const basePrice = parseFloat(priceEl.dataset.priceUsd);
                     let newPrice = basePrice * rate;
                     
-                    // Lógica de redondeo estético para monedas que no sean de alto valor
                     if (currency !== 'USD' && !['COP', 'ARS', 'CLP', 'VES'].includes(currency)) {
                          newPrice = Math.round(newPrice * 10) / 10;
                     }
@@ -253,7 +262,6 @@
                 suggestionsContainer.style.display = 'none';
             };
             
-            // Lógica de navegación infinita
             leftArrow.addEventListener('click', () => { 
                 if (navScrollContainer.scrollLeft === 0) {
                     navScrollContainer.scrollTo({ left: navScrollContainer.scrollWidth, behavior: 'smooth' });
@@ -262,7 +270,6 @@
                 }
             });
             rightArrow.addEventListener('click', () => {
-                // Se usa Math.ceil para evitar errores de redondeo de píxeles
                 if (Math.ceil(navScrollContainer.scrollLeft + navScrollContainer.clientWidth) >= navScrollContainer.scrollWidth) {
                     navScrollContainer.scrollTo({ left: 0, behavior: 'smooth' });
                 } else {
