@@ -7,6 +7,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- 1. AÑADIR EL CSS DE LA GALERÍA -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
     <link rel="stylesheet" href="style.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://cdn.jsdelivr.net/npm/contentful@latest/dist/contentful.browser.min.js"></script>
@@ -22,9 +24,10 @@
                 </a>
             </div>
             <div class="header-right-controls">
-                <a href="https://www.instagram.com/nvxonspotify/" target="_blank" class="references-btn">
+                <!-- Cambiamos el <a> por un <button> para que no intente navegar -->
+                <button id="references-btn" class="references-btn">
                     <i class='bx bxs-badge-check'></i> Nuestras referencias
-                </a>
+                </button>
                  <div class="search-bar">
                     <i class="bx bx-search search-icon"></i>
                     <input type="text" id="search-input" placeholder="Buscar productos...">
@@ -63,6 +66,17 @@
     <main id="main-content">
     </main>
 
+    <!-- 2. AÑADIR LA GALERÍA OCULTA -->
+    <div id="references-gallery" style="display: none;">
+        <!-- Añade tantos enlaces 'a' como imágenes de referencia tengas -->
+        <a href="images/references/ref1.jpg" class="glightbox" data-gallery="references"></a>
+        <a href="images/references/ref2.jpg" class="glightbox" data-gallery="references"></a>
+        <a href="images/references/ref3.jpg" class="glightbox" data-gallery="references"></a>
+        <!-- Puedes añadir más aquí... -->
+        <!-- <a href="images/references/ref4.jpg" class="glightbox" data-gallery="references"></a> -->
+    </div>
+
+
     <footer>
         <div class="footer-container">
             <div class="footer-column">
@@ -96,6 +110,8 @@
         </div>
     </footer>
 
+    <!-- 3. AÑADIR EL JAVASCRIPT DE LA GALERÍA -->
+    <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
     <script>
         const contentfulClient = contentful.createClient({
             space: 'n9v6wavle4it',
@@ -136,7 +152,6 @@
                     if (sectionGrid) sectionGrid.innerHTML += productCardHTML;
                 });
 
-                // En lugar de llamar a la función directamente, la envolvemos en un setTimeout
                 setTimeout(initializePageScripts, 100);
             })
             .catch(console.error);
@@ -176,6 +191,20 @@
         }
 
         function initializePageScripts() {
+            // Inicialización de la galería
+            const lightbox = GLightbox({
+                selector: '.glightbox',
+                touchNavigation: true,
+                loop: true
+            });
+
+            // Lógica para abrir la galería con el botón
+            const referencesBtn = document.getElementById('references-btn');
+            referencesBtn.addEventListener('click', () => {
+                lightbox.open();
+            });
+
+
             const searchInput = document.getElementById('search-input');
             const clearSearchIcon = document.getElementById('clear-search-icon');
             const suggestionsContainer = document.getElementById('suggestions-container');
@@ -226,29 +255,16 @@
 
             function setInitialCurrency() {
                 const detectedCurrency = window.VAMP_DEFAULT_CURRENCY;
-                console.log('DEBUG: Moneda detectada por Netlify:', detectedCurrency);
-
                 if (!detectedCurrency || detectedCurrency === 'USD') {
-                    console.log('DEBUG: No se requiere cambio de moneda.');
                     return;
                 }
-                
                 const currencyElement = currencyDropdown.querySelector(`li[data-currency="${detectedCurrency}"]`);
-                console.log('DEBUG: Elemento <li> encontrado:', currencyElement);
-                
-                // ¡LA CLAVE ESTÁ AQUÍ! Volvemos a seleccionar los precios JUSTO antes de usarlos.
                 const currentPriceElements = document.querySelectorAll('.price');
-                console.log('DEBUG: Número de precios a actualizar:', currentPriceElements.length);
-
                 if (currencyElement && currentPriceElements.length > 0) {
                     const currency = currencyElement.dataset.currency;
                     const rate = parseFloat(currencyElement.dataset.rate);
-                    
-                    console.log('DEBUG: Actualizando precios a:', currency, 'con tasa:', rate);
                     updatePrices(currency, rate);
                     currentCurrencySpan.textContent = currency;
-                } else {
-                    console.log('DEBUG: No se encontró el elemento de moneda o no hay precios para actualizar.');
                 }
             }
             
