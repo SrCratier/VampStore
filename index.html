@@ -11,7 +11,7 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://cdn.jsdelivr.net/npm/contentful@latest/dist/contentful.browser.min.js"></script>
 </head>
-<body> 
+<body>
 
     <header>
         <div class="header-container">
@@ -190,28 +190,6 @@
 
             const currencySymbols = { USD: '$', EUR: '€', Mx: 'Mx $', PEN: 'S/', ARS: 'ARS $', COP: 'COP $', VES: 'Bs.', CLP: 'CLP $' };
             
-            // --- NUEVO CÓDIGO PARA AUTO-SELECCIÓN DE MONEDA ---
-            if (window.VAMP_DEFAULT_CURRENCY && window.VAMP_DEFAULT_CURRENCY !== 'USD') {
-                const defaultCurrencyLi = currencyDropdown.querySelector(`li[data-currency="${window.VAMP_DEFAULT_CURRENCY}"]`);
-                if (defaultCurrencyLi) {
-                    // Simulamos un clic para activar la lógica de cambio de moneda existente
-                    defaultCurrencyLi.click();
-                }
-            }
-            // --- FIN DEL NUEVO CÓDIGO ---
-
-            currencyBtn.addEventListener('click', (e) => { e.stopPropagation(); currencyDropdown.classList.toggle('show'); });
-            currencyDropdown.addEventListener('click', (e) => {
-                if (e.target.tagName === 'LI') {
-                    const currency = e.target.dataset.currency;
-                    const rate = parseFloat(e.target.dataset.rate);
-                    updatePrices(currency, rate);
-                    currentCurrencySpan.textContent = currency;
-                    currencyDropdown.classList.remove('show');
-                }
-            });
-            document.addEventListener('click', (e) => { if (e.target.closest('.currency-selector') === null) currencyDropdown.classList.remove('show'); });
-
             function updatePrices(currency, rate) {
                 priceElements.forEach(priceEl => {
                     const basePrice = parseFloat(priceEl.dataset.priceUsd);
@@ -232,6 +210,43 @@
                     priceEl.textContent = symbol + " " + formattedPrice;
                 });
             }
+
+            currencyBtn.addEventListener('click', (e) => { e.stopPropagation(); currencyDropdown.classList.toggle('show'); });
+            currencyDropdown.addEventListener('click', (e) => {
+                if (e.target.tagName === 'LI') {
+                    const currency = e.target.dataset.currency;
+                    const rate = parseFloat(e.target.dataset.rate);
+                    updatePrices(currency, rate);
+                    currentCurrencySpan.textContent = currency;
+                    currencyDropdown.classList.remove('show');
+                }
+            });
+            document.addEventListener('click', (e) => { if (e.target.closest('.currency-selector') === null) currencyDropdown.classList.remove('show'); });
+
+            // --- NUEVO CÓDIGO MÁS ROBUSTO PARA AUTO-SELECCIÓN DE MONEDA ---
+            function setInitialCurrency() {
+                const detectedCurrency = window.VAMP_DEFAULT_CURRENCY;
+                // Si la moneda detectada no existe o es USD, no hacemos nada.
+                if (!detectedCurrency || detectedCurrency === 'USD') {
+                    return;
+                }
+                
+                // Buscamos el elemento <li> que corresponde a la moneda detectada.
+                const currencyElement = currencyDropdown.querySelector(`li[data-currency="${detectedCurrency}"]`);
+                
+                // Si lo encontramos, extraemos sus datos y actualizamos los precios directamente.
+                if (currencyElement) {
+                    const currency = currencyElement.dataset.currency;
+                    const rate = parseFloat(currencyElement.dataset.rate);
+                    updatePrices(currency, rate);
+                    currentCurrencySpan.textContent = currency;
+                }
+            }
+            
+            // Llamamos a la función para establecer la moneda inicial.
+            setInitialCurrency();
+            // --- FIN DEL NUEVO CÓDIGO ---
+
 
             searchInput.addEventListener('input', () => {
                 const searchTerm = searchInput.value.toLowerCase().trim();
