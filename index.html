@@ -136,7 +136,8 @@
                     if (sectionGrid) sectionGrid.innerHTML += productCardHTML;
                 });
 
-                initializePageScripts();
+                // En lugar de llamar a la función directamente, la envolvemos en un setTimeout
+                setTimeout(initializePageScripts, 100);
             })
             .catch(console.error);
         });
@@ -223,30 +224,35 @@
             });
             document.addEventListener('click', (e) => { if (e.target.closest('.currency-selector') === null) currencyDropdown.classList.remove('show'); });
 
-            // --- NUEVO CÓDIGO MÁS ROBUSTO PARA AUTO-SELECCIÓN DE MONEDA ---
             function setInitialCurrency() {
                 const detectedCurrency = window.VAMP_DEFAULT_CURRENCY;
-                // Si la moneda detectada no existe o es USD, no hacemos nada.
+                console.log('DEBUG: Moneda detectada por Netlify:', detectedCurrency);
+
                 if (!detectedCurrency || detectedCurrency === 'USD') {
+                    console.log('DEBUG: No se requiere cambio de moneda.');
                     return;
                 }
                 
-                // Buscamos el elemento <li> que corresponde a la moneda detectada.
                 const currencyElement = currencyDropdown.querySelector(`li[data-currency="${detectedCurrency}"]`);
+                console.log('DEBUG: Elemento <li> encontrado:', currencyElement);
                 
-                // Si lo encontramos, extraemos sus datos y actualizamos los precios directamente.
-                if (currencyElement) {
+                // ¡LA CLAVE ESTÁ AQUÍ! Volvemos a seleccionar los precios JUSTO antes de usarlos.
+                const currentPriceElements = document.querySelectorAll('.price');
+                console.log('DEBUG: Número de precios a actualizar:', currentPriceElements.length);
+
+                if (currencyElement && currentPriceElements.length > 0) {
                     const currency = currencyElement.dataset.currency;
                     const rate = parseFloat(currencyElement.dataset.rate);
+                    
+                    console.log('DEBUG: Actualizando precios a:', currency, 'con tasa:', rate);
                     updatePrices(currency, rate);
                     currentCurrencySpan.textContent = currency;
+                } else {
+                    console.log('DEBUG: No se encontró el elemento de moneda o no hay precios para actualizar.');
                 }
             }
             
-            // Llamamos a la función para establecer la moneda inicial.
             setInitialCurrency();
-            // --- FIN DEL NUEVO CÓDIGO ---
-
 
             searchInput.addEventListener('input', () => {
                 const searchTerm = searchInput.value.toLowerCase().trim();
