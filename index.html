@@ -96,13 +96,6 @@
         </div>
     </footer>
 
-    <div id="help-bubble" class="help-bubble-container">
-        <div id="contact-tooltip" class="help-tooltip"></div>
-        <div id="contact-icon" class="help-icon">
-            <i class='bx bx-help-circle'></i>
-        </div>
-    </div>
-
     <script>
         const contentfulClient = contentful.createClient({
             space: 'n9v6wavle4it',
@@ -150,9 +143,18 @@
 
         function createProductCard(data) {
             const featuresHTML = data.caracteristicas ? data.caracteristicas.map(feature => `<li><i class='bx bxs-zap'></i>${feature}</li>`).join('') : '';
-            const paypalButtonHTML = data.linkPayPal ? `<a href="${data.linkPayPal}" target="_blank" class="paypal-btn" title="Pagar con PayPal"><i class='bx bxl-paypal'></i></a>` : '';
             const imageUrl = data.imagen && data.imagen.fields && data.imagen.fields.file ? 'https:' + data.imagen.fields.file.url : '';
             
+            let cartButtonHTML;
+            let paypalButtonHTML = '';
+
+            if (data.linkPayPal) {
+                cartButtonHTML = `<a href="https://www.instagram.com/nvxonspotify/" target="_blank" class="cart-btn" title="Contactar"><i class='bx bx-cart'></i></a>`;
+                paypalButtonHTML = `<a href="${data.linkPayPal}" target="_blank" class="paypal-btn" title="Pagar con PayPal"><i class='bx bxl-paypal'></i></a>`;
+            } else {
+                cartButtonHTML = `<a href="https://www.instagram.com/nvxonspotify/" target="_blank" class="cart-btn cart-btn-full" title="Contactar"><i class='bx bx-cart'></i> Contactar</a>`;
+            }
+
             return `
                 <div class="product-card" data-name="${data.idproducto || data.nombre}">
                     <img src="${imageUrl}" alt="${data.nombre}">
@@ -164,7 +166,7 @@
                     <div class="card-footer">
                         <span class="price" data-price-usd="${data.precioUSD}">$${(data.precioUSD || 0).toFixed(2)}</span>
                         <div class="card-buttons">
-                            <a href="https://www.instagram.com/nvxonspotify/" target="_blank" class="cart-btn" title="Contactar"><i class='bx bx-cart'></i></a>
+                            ${cartButtonHTML}
                             ${paypalButtonHTML}
                         </div>
                     </div>
@@ -178,9 +180,6 @@
             const suggestionsContainer = document.getElementById('suggestions-container');
             const allProductCards = document.querySelectorAll('.product-card');
             const allProductSections = document.querySelectorAll('.product-section');
-            const helpBubble = document.getElementById('help-bubble');
-            const contactIcon = document.getElementById('contact-icon');
-            const contactTooltip = document.getElementById('contact-tooltip');
             const currencyBtn = document.getElementById('currency-btn');
             const currencyDropdown = document.getElementById('currency-dropdown');
             const currentCurrencySpan = document.getElementById('current-currency');
@@ -190,17 +189,6 @@
             const rightArrow = document.getElementById('right-arrow');
 
             const currencySymbols = { USD: '$', EUR: '€', Mx: 'Mx $', PEN: 'S/', ARS: 'ARS $', COP: 'COP $', VES: 'Bs.', CLP: 'CLP $' };
-
-            if(contactTooltip){
-                contactTooltip.innerHTML = `<strong>Aviso importante:</strong><br>Esta página es para ver precios en su moneda. Las compras se realizan por nuestras redes sociales.`;
-                setTimeout(() => {
-                    if (helpBubble) helpBubble.classList.add('visible');
-                }, 2500);
-            }
-
-            contactIcon.addEventListener('click', (e) => { e.stopPropagation(); contactTooltip.classList.toggle('visible'); });
-            document.addEventListener('click', () => { if (contactTooltip && contactTooltip.classList.contains('visible')) contactTooltip.classList.remove('visible'); });
-            window.addEventListener('scroll', () => { if (contactTooltip && contactTooltip.classList.contains('visible')) contactTooltip.classList.remove('visible'); });
             
             currencyBtn.addEventListener('click', (e) => { e.stopPropagation(); currencyDropdown.classList.toggle('show'); });
             currencyDropdown.addEventListener('click', (e) => {
@@ -217,9 +205,21 @@
             function updatePrices(currency, rate) {
                 priceElements.forEach(priceEl => {
                     const basePrice = parseFloat(priceEl.dataset.priceUsd);
-                    const newPrice = basePrice * rate;
+                    let newPrice = basePrice * rate;
+                    
+                    // Lógica de redondeo estético para monedas que no sean de alto valor
+                    if (currency !== 'USD' && !['COP', 'ARS', 'CLP', 'VES'].includes(currency)) {
+                         newPrice = Math.round(newPrice * 10) / 10;
+                    }
+
                     const symbol = currencySymbols[currency] || '$';
-                    let formattedPrice = ['COP', 'ARS', 'CLP'].includes(currency) ? newPrice.toLocaleString('es-CO', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) : newPrice.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    let formattedPrice;
+
+                    if (['COP', 'ARS', 'CLP'].includes(currency)) {
+                        formattedPrice = Math.round(newPrice).toLocaleString('es-CO');
+                    } else {
+                        formattedPrice = newPrice.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    }
                     priceEl.textContent = symbol + " " + formattedPrice;
                 });
             }
@@ -253,8 +253,22 @@
                 suggestionsContainer.style.display = 'none';
             };
             
-            leftArrow.addEventListener('click', () => { navScrollContainer.scrollBy({ left: -200, behavior: 'smooth' }); });
-            rightArrow.addEventListener('click', () => { navScrollContainer.scrollBy({ left: 200, behavior: 'smooth' }); });
+            // Lógica de navegación infinita
+            leftArrow.addEventListener('click', () => { 
+                if (navScrollContainer.scrollLeft === 0) {
+                    navScrollContainer.scrollTo({ left: navScrollContainer.scrollWidth, behavior: 'smooth' });
+                } else {
+                    navScrollContainer.scrollBy({ left: -200, behavior: 'smooth' }); 
+                }
+            });
+            rightArrow.addEventListener('click', () => {
+                // Se usa Math.ceil para evitar errores de redondeo de píxeles
+                if (Math.ceil(navScrollContainer.scrollLeft + navScrollContainer.clientWidth) >= navScrollContainer.scrollWidth) {
+                    navScrollContainer.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    navScrollContainer.scrollBy({ left: 200, behavior: 'smooth' });
+                }
+            });
         }
     </script>
 </body>
