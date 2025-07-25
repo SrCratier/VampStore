@@ -19,13 +19,13 @@
             <div class="logo-container">
                 <a href="#" class="logo">
                     <i class='bx bxs-ghost'></i>
-                    <span>VampStore</span>
+                    <span>NvX Store</span>
                 </a>
             </div>
             <div class="header-right-controls">
-                <button id="references-btn" class="references-btn">
+                <a href="https://t.me/nvxreferences" id="references-btn" class="references-btn" target="_blank">
                     <i class='bx bxs-badge-check'></i> Nuestras referencias
-                </button>
+                </a>
                  <div class="search-bar">
                     <i class="bx bx-search search-icon"></i>
                     <input type="text" id="search-input" placeholder="Buscar productos...">
@@ -63,19 +63,6 @@
     
     <main id="main-content">
     </main>
-
-    <div id="references-gallery" style="display: none;">
-        <a href="images/references/ref4-1.jpg" class="glightbox" data-gallery="references"></a>
-        <a href="images/references/ref1-1.jpg" class="glightbox" data-gallery="references"></a>
-        <a href="images/references/ref1-2.jpg" class="glightbox" data-gallery="references"></a>
-        <a href="images/references/ref1-3.jpg" class="glightbox" data-gallery="references"></a>
-        <a href="images/references/ref2-1.jpg" class="glightbox" data-gallery="references"></a>
-        <a href="images/references/ref2-2.jpg" class="glightbox" data-gallery="references"></a>
-        <a href="images/references/ref2-3.jpg" class="glightbox" data-gallery="references"></a>
-        <a href="images/references/ref3-1.jpg" class="glightbox" data-gallery="references"></a>
-
-    </div>
-
 
     <footer>
         <div class="footer-container">
@@ -190,20 +177,6 @@
         }
 
         function initializePageScripts() {
-            const lightbox = GLightbox({
-                selector: '.glightbox',
-                touchNavigation: true,
-                loop: true,
-                autoplayVideos: true, // Esto activa el cambio automático
-                slideShowSpeed: 2500 // 2.5 segundos
-            });
-
-            const referencesBtn = document.getElementById('references-btn');
-            referencesBtn.addEventListener('click', () => {
-                lightbox.open();
-            });
-
-
             const searchInput = document.getElementById('search-input');
             const clearSearchIcon = document.getElementById('clear-search-icon');
             const suggestionsContainer = document.getElementById('suggestions-container');
